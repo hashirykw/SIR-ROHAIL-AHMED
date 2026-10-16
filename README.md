@@ -36,7 +36,7 @@ Everything on the site comes from a public source. Nothing is estimated. These a
 7. **Recorded Workshop, Oct/Nov 2026, O Level, AS and A2.** From his Instagram. Fees are not shown anywhere; every fee question goes to WhatsApp.
 8. **Portrait.** The cutout comes from the Cambridge Online portrait. A higher-resolution photo with a plain background will look sharper.
 9. **Video.** The home page plays his own YouTube video "O Level Accounting 7707 | Full Solution | May/June 2022 v22". Change `featuredVideo` in `config.js` to feature another.
-10. **Domain.** `sitemap.xml`, `robots.txt` and each page's `<head>` use `https://sirrohailahmed.vercel.app`. Find and replace it if you use another domain.
+10. **Domain.** `sitemap.xml`, `robots.txt` and each page's `<head>` use `https://sir-rohail-ahmed.vercel.app`. Find and replace it if you use another domain.
 
 Results and student reviews sections stay hidden until real ones are added to `RESULTS` and `REVIEWS` in `config.js`.
 

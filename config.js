@@ -63,7 +63,7 @@ window.RA_CONFIG = {
   REVIEWS: [],
 
   /* 6. SITE ----------------------------------------------------------------- */
-  siteUrl:   'https://sirrohailahmed.vercel.app',
+  siteUrl:   'https://sir-rohail-ahmed.vercel.app',
   agency:    'Nexlyr Solutions',
   agencyUrl: 'https://nexlyr.solutions'
 };

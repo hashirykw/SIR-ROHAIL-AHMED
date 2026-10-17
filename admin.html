@@ -936,6 +936,36 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
 .card .card{box-shadow:var(--card-depth)}
 @media (max-width:760px){.card{-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);border-radius:22px}}
 
+/* =========================================================================
+   v3.1 — smoked grey glass
+   ========================================================================= */
+:root{
+  --glass-card:linear-gradient(160deg,rgba(225,225,230,.17) 0%,rgba(170,170,176,.09) 32%,rgba(120,120,126,.06) 64%,rgba(190,190,196,.12) 100%),linear-gradient(180deg,rgba(38,38,42,.42),rgba(22,22,25,.5));
+  --glass-in:linear-gradient(160deg,rgba(230,230,236,.12),rgba(160,160,166,.05) 60%,rgba(200,200,206,.08));
+  --card-depth:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -1px 0 rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.08),inset 0 0 40px rgba(255,255,255,.025);
+  --card-drop:0 1px 1px rgba(0,0,0,.4),0 30px 60px -30px rgba(0,0,0,.85),0 60px 120px -70px rgba(0,0,0,.6);
+}
+:root[data-theme="light"]{
+  --glass-card:linear-gradient(160deg,rgba(255,255,255,.82) 0%,rgba(240,240,243,.6) 45%,rgba(228,228,232,.55) 100%);
+  --glass-in:linear-gradient(160deg,rgba(255,255,255,.85),rgba(236,236,240,.6));
+}
+.card,.cta{-webkit-backdrop-filter:blur(32px) saturate(115%) brightness(1.04);backdrop-filter:blur(32px) saturate(115%) brightness(1.04)}
+.card:hover{box-shadow:var(--card-depth),0 1px 1px rgba(0,0,0,.4),0 44px 84px -36px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.04)}
+.card::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(var(--glow-rgb),calc(var(--cglow) * .95)),transparent 45%),linear-gradient(150deg,rgba(255,255,255,.55),rgba(255,255,255,.12) 22%,rgba(255,255,255,.03) 50%,rgba(255,255,255,.06) 78%,rgba(223,187,118,.35));opacity:.85}
+.card::before{background:
+    linear-gradient(90deg,transparent 6%,rgba(255,255,255,.7) 50%,transparent 94%) top center/100% 1px no-repeat,
+    linear-gradient(180deg,rgba(255,255,255,.09),transparent 30%),
+    linear-gradient(118deg,transparent 30%,rgba(255,255,255,.05) 42%,rgba(255,255,255,0) 52%,transparent 60%),
+    radial-gradient(120% 70% at 0% 0%,rgba(255,255,255,.06),transparent 55%)}
+.rail>.card{box-shadow:var(--card-depth),0 22px 40px -28px rgba(0,0,0,.9)}
+:is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.bk,.out,.fs-c,.inv,.eq-tx button,.tool-viz,.ppp,.tm-pre button,.po-feats li,.so,.ct-soc a){
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.07),0 12px 26px -20px rgba(0,0,0,.75)!important}
+:is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.eq-tx button,.tm-pre button):hover{background:var(--frost),linear-gradient(160deg,rgba(240,240,246,.17),rgba(170,170,176,.07) 60%,rgba(210,210,216,.11))!important}
+.mbar{background:linear-gradient(180deg,rgba(50,50,55,.55),rgba(26,26,30,.6))!important}
+:root[data-theme="light"] .mbar{background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(240,240,244,.7))!important}
+.plate,.fl,.phero-art .float,.ab-fig .plate,.acc .code{background:linear-gradient(160deg,rgba(70,70,76,.62),rgba(28,28,32,.72))!important;-webkit-backdrop-filter:blur(20px) saturate(115%)!important;backdrop-filter:blur(20px) saturate(115%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px rgba(255,255,255,.08),0 24px 40px -24px rgba(0,0,0,.85)!important}
+:root[data-theme="light"] :is(.plate,.fl,.phero-art .float,.ab-fig .plate,.acc .code){background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(240,240,244,.75))!important;box-shadow:inset 0 1px 0 #fff,0 20px 36px -24px rgba(30,40,30,.4)!important}
+
 .po-g{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,72px);align-items:center}
 .po-feats{display:grid;gap:10px;margin-top:30px;max-width:560px}
 .po-feats li{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:14px 16px;border-radius:10px;border:1px solid var(--line-w);background:color-mix(in srgb,var(--panel) 75%,transparent)}

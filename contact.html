@@ -698,6 +698,94 @@ html.js [data-split].in .sw{transform:none}
 .sy-q svg{width:16px;height:16px;color:var(--brass);flex:0 0 16px}
 .sy-q input{flex:1;height:100%;background:none;border:0;outline:none;font-size:14.5px}
 
+/* =========================================================================
+   v2.1 polish — buttons and cards: finer detail, softer motion
+   ========================================================================= */
+@property --bglow{syntax:'<number>';inherits:true;initial-value:0}
+@property --cglow{syntax:'<number>';inherits:true;initial-value:0}
+:root{--glow-rgb:255,232,186;--e-soft:cubic-bezier(.22,1,.36,1);--e-silk:cubic-bezier(.33,1,.68,1)}
+:root[data-theme="light"]{--glow-rgb:176,138,69}
+
+/* ---------- buttons */
+.btn{transition:transform .7s var(--e-soft),box-shadow .7s var(--e-soft),background .5s var(--e-silk),color .4s,letter-spacing .7s var(--e-soft),--bglow .6s var(--e-silk)}
+.btn:not(.btn-sm):not(.btn-xs):hover{letter-spacing:.165em}
+.btn::after{background:radial-gradient(110px circle at var(--bx,50%) var(--by,50%),rgba(var(--glow-rgb),calc(var(--bglow) * .95)),transparent 70%),linear-gradient(140deg,var(--edge-a),rgba(255,255,255,.07) 34%,rgba(255,255,255,.03) 62%,var(--edge-b))}
+.btn:hover{--bglow:1}
+.btn::before{transition:opacity .6s var(--e-silk)}
+/* top specular line + soft floor shadow inside the plate */
+.btn>.btn-sheen{position:absolute;inset:0;z-index:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 42%),linear-gradient(0deg,rgba(0,0,0,.18),transparent 40%)}
+:root[data-theme="light"] .btn>.btn-sheen{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,0) 50%)}
+.btn>*:not(.btn-sheen):not(.rip){position:relative;z-index:2}
+.btn:active{transform:translateY(1px) scale(.975);transition-duration:.18s;box-shadow:inset 0 2px 6px rgba(0,0,0,.35),0 6px 14px -10px rgba(0,0,0,.8)}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--bg),0 0 0 4px color-mix(in srgb,var(--brass) 80%,transparent),0 0 0 9px color-mix(in srgb,var(--brass) 14%,transparent)}
+/* click ripple */
+.btn .rip{position:absolute;z-index:1;left:var(--rx);top:var(--ry);width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(var(--glow-rgb),.55),rgba(var(--glow-rgb),0) 70%);transform:scale(0);animation:rip .9s var(--e-soft) forwards}
+.btn-pri .rip{background:radial-gradient(circle,rgba(255,255,255,.7),rgba(255,255,255,0) 70%)}
+@keyframes rip{to{transform:scale(34);opacity:0}}
+/* icon cell: grows a touch and glows on hover */
+.btn>svg.arr,.btn>svg.ic{transition:background .5s var(--e-silk),color .4s,box-shadow .5s var(--e-silk),padding .6s var(--e-spring),margin .6s var(--e-spring),transform .6s var(--e-spring)}
+.btn:not(.btn-sm):not(.btn-xs):hover>svg.arr,.btn:not(.btn-sm):not(.btn-xs):hover>svg.ic{padding-inline:calc((var(--h) - var(--ic)) / 2 - 2px);margin-left:6px}
+.btn:hover>svg.arr path,.btn:hover>svg.ic path{animation:arrLoop .85s var(--e-soft)}
+/* primary: living gold — the metal shifts as you hover, with a hairline engraving */
+.btn-pri{background:linear-gradient(180deg,#fff4d8 0%,#f3d9a2 16%,#ddb56d 42%,#b88d48 66%,#d9b874 84%,#f4dfa9 100%);background-size:100% 220%;background-position:0 0;
+  transition:transform .7s var(--e-soft),box-shadow .7s var(--e-soft),background-position 1.1s var(--e-silk),letter-spacing .7s var(--e-soft),--bglow .6s var(--e-silk)}
+.btn-pri:hover{background-position:0 55%}
+.btn-pri::after{inset:4px;border:1px solid rgba(110,76,22,.32);box-shadow:inset 0 1px 0 rgba(255,250,235,.45),inset 0 -1px 0 rgba(110,76,22,.12)}
+.btn-pri::before{background:linear-gradient(105deg,transparent 32%,rgba(255,255,255,.65) 47%,rgba(255,255,255,.15) 53%,transparent 64%);transition:transform 1.2s var(--e-soft)}
+.btn-pri>.btn-sheen{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 38%),radial-gradient(120% 90% at 50% 120%,rgba(120,80,20,.22),transparent 60%)}
+.btn-pri:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(96,64,16,.45),0 0 0 1px rgba(122,86,28,.8),0 28px 50px -20px rgba(223,187,118,.85),0 0 0 7px rgba(223,187,118,.1),0 0 40px -6px rgba(223,187,118,.35)}
+.btn-pri>svg.arr,.btn-pri>svg.ic{box-shadow:inset 0 1px 0 rgba(255,236,190,.22),inset 0 0 0 1px rgba(255,236,190,.08),0 1px 0 rgba(255,246,222,.6)}
+:root[data-theme="light"] .btn-pri{background:linear-gradient(180deg,#3a8463 0%,#246047 30%,#174532 62%,#0d2f22 100%);background-size:100% 200%}
+:root[data-theme="light"] .btn-pri:hover{background-position:0 40%;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 1px rgba(10,38,27,.9),0 26px 44px -20px rgba(16,60,42,.7),0 0 0 6px rgba(42,138,98,.1)}
+/* secondary glass: a gold floor-light rises on hover */
+.btn:not(.btn-pri):not(.btn-ghost):not(.btn-green)::before{opacity:1;background:radial-gradient(160px circle at var(--bx,50%) var(--by,50%),rgba(var(--glow-rgb),calc(var(--bglow) * .2)),transparent 70%),radial-gradient(80% 120% at 50% 130%,rgba(var(--glow-rgb),calc(var(--bglow) * .22)),transparent 60%);transition:--bglow .6s var(--e-silk)}
+.btn:not(.btn-pri):not(.btn-ghost):not(.btn-green):hover::before{--bglow:1}
+.btn-ghost:hover{letter-spacing:.14em}
+
+/* ---------- rail arrows & small controls get the same finish */
+.rail-b{transition:transform .6s var(--e-soft),background .4s,color .3s,opacity .3s,border-color .4s,box-shadow .6s var(--e-soft)}
+.rail-b:hover{box-shadow:var(--hi),0 16px 30px -18px rgba(0,0,0,.9),0 0 0 5px rgba(var(--glow-rgb),.08)}
+.rail-b:active{transform:scale(.94)}
+.seg button,.seg a{transition:background .5s var(--e-silk),color .35s,box-shadow .5s var(--e-silk),transform .5s var(--e-soft)}
+.seg button:active,.seg a:active{transform:scale(.96)}
+.chip,.term,.st-btn,.gl-az button{transition:all .45s var(--e-soft)}
+.chip:hover,.term:hover,.gl-az button:hover{transform:translateY(-2px)}
+
+/* ---------- cards */
+.card{transition:box-shadow .9s var(--e-soft),transform .9s var(--e-soft),--cglow .7s var(--e-silk);
+  background:radial-gradient(520px circle at var(--mx,50%) var(--my,0%),rgba(var(--glow-rgb),calc(var(--cglow) * .075)),transparent 46%),var(--ruled-bg,none),var(--margin-bg,none),var(--glass)}
+.card .card:hover{--cglow:0}
+.card::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(var(--glow-rgb),calc(var(--cglow) * .9)),transparent 45%),linear-gradient(145deg,var(--edge-a),rgba(255,236,196,.08) 26%,transparent 52%,var(--edge-b));opacity:.85}
+.card:hover{--cglow:1;box-shadow:var(--hi),inset 0 0 0 1px var(--line-w),0 50px 100px -46px rgba(0,0,0,.92),0 0 0 1px rgba(var(--glow-rgb),.04)}
+:root[data-theme="light"] .card:hover{box-shadow:var(--hi),inset 0 0 0 1px var(--line-w),0 46px 90px -46px rgba(32,48,30,.45)}
+/* ledger corner ticks + glossy crown */
+.card::before{background:
+  linear-gradient(rgba(var(--glow-rgb),.55),rgba(var(--glow-rgb),.55)) left 14px top 14px/12px 1px no-repeat,
+  linear-gradient(rgba(var(--glow-rgb),.55),rgba(var(--glow-rgb),.55)) left 14px top 14px/1px 12px no-repeat,
+  linear-gradient(rgba(var(--glow-rgb),.4),rgba(var(--glow-rgb),.4)) right 14px bottom 14px/12px 1px no-repeat,
+  linear-gradient(rgba(var(--glow-rgb),.4),rgba(var(--glow-rgb),.4)) right 14px bottom 14px/1px 12px no-repeat,
+  linear-gradient(180deg,rgba(255,255,255,.06),transparent 24%),radial-gradient(90% 60% at 0% 0%,rgba(255,236,196,.06),transparent 60%)}
+:root[data-theme="light"] .card::before{background:
+  linear-gradient(rgba(var(--glow-rgb),.6),rgba(var(--glow-rgb),.6)) left 14px top 14px/12px 1px no-repeat,
+  linear-gradient(rgba(var(--glow-rgb),.6),rgba(var(--glow-rgb),.6)) left 14px top 14px/1px 12px no-repeat,
+  linear-gradient(rgba(var(--glow-rgb),.45),rgba(var(--glow-rgb),.45)) right 14px bottom 14px/12px 1px no-repeat,
+  linear-gradient(rgba(var(--glow-rgb),.45),rgba(var(--glow-rgb),.45)) right 14px bottom 14px/1px 12px no-repeat,
+  linear-gradient(180deg,rgba(255,255,255,.7),transparent 30%)}
+.card.margin::before,.cy-card::before,.ph+.card::before{background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 24%)}
+/* linked cards without tilt lift gently */
+a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
+.card .sheen{transition:opacity .8s var(--e-silk)}
+/* glass list items inside cards */
+.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.eq-tx button,.fs-c,.inv,.bk,.out{transition:transform .7s var(--e-soft),border-color .5s var(--e-silk),box-shadow .7s var(--e-soft),background .5s}
+.cw:hover,.coa-sec:hover,.rat:hover,.con:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--brass) 40%,transparent);box-shadow:var(--hi),0 22px 40px -28px rgba(0,0,0,.85)}
+.proc-s .pn b{transition:letter-spacing .8s var(--e-soft)}
+.proc-s:hover .pn b{letter-spacing:.04em}
+.proc-s .pn i{transform-origin:left;transition:transform .9s var(--e-soft)}
+.proc-s:hover .pn i{transform:scaleX(1.15)}
+@media (prefers-reduced-motion:reduce){.btn .rip{display:none}.btn,.card{transition:none}}
+
 .ct{position:relative;padding-bottom:clamp(40px,6vw,80px)}
 .ct-g{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(18px,3vw,36px);align-items:start}
 .ct-form{display:grid;gap:16px;padding:clamp(22px,3vw,38px)}
@@ -1691,7 +1779,7 @@ function smooth() {
   const ST = window.ScrollTrigger;
   if (window.gsap && ST) gsap.registerPlugin(ST);
   if (!RA.RM && window.Lenis) {
-    const lenis = RA.lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, wheelMultiplier: 0.95 });
+    const lenis = RA.lenis = new Lenis({ duration: 1.35, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true, wheelMultiplier: 0.95 });
     if (window.gsap && ST) { lenis.on('scroll', ST.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0); }
     else { const raf = t => { lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); }
   }
@@ -2090,6 +2178,24 @@ RA.rails = function (scope) {
 
 /* ---------------------------------------------------------------- button light + photo parallax */
 function finish() {
+  /* button finish: inner sheen layer and click ripple */
+  const dress = b => { if (b.firstElementChild && b.firstElementChild.classList.contains('btn-sheen')) return; const s = document.createElement('span'); s.className = 'btn-sheen'; s.setAttribute('aria-hidden', 'true'); b.prepend(s); };
+  $$('.btn').forEach(dress);
+  if ('MutationObserver' in window) new MutationObserver(ms => ms.forEach(m => {
+    const t = m.target; if (t.nodeType === 1 && t.classList.contains('btn')) dress(t);
+    m.addedNodes.forEach(n => { if (n.nodeType !== 1) return; if (n.classList.contains('btn')) dress(n); if (n.firstElementChild) $$('.btn', n).forEach(dress); });
+  })).observe(document.body, { childList: true, subtree: true });
+  if (!RA.RM) document.addEventListener('pointerdown', e => {
+    const b = e.target.closest && e.target.closest('.btn'); if (!b || b.disabled) return;
+    const r = b.getBoundingClientRect(), s = document.createElement('span');
+    s.className = 'rip'; s.style.setProperty('--rx', (e.clientX - r.left) + 'px'); s.style.setProperty('--ry', (e.clientY - r.top) + 'px');
+    b.appendChild(s); setTimeout(() => s.remove(), 950);
+  });
+  /* cards: the lit edge follows the cursor */
+  if (RA.FINE && !RA.RM) document.addEventListener('pointermove', e => {
+    const c = e.target.closest && e.target.closest('.card'); if (!c || c._tilt) return;
+    const r = c.getBoundingClientRect(); c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  }, { passive: true });
   $$('a.btn:not(.btn-ghost):not(.btn-sm):not(.btn-xs):not(.btn-block)').forEach(a => {
     if ($('svg', a) || !a.textContent.trim()) return;
     a.insertAdjacentHTML('beforeend', a.hasAttribute('data-wa') ? ICON.wa.replace('<svg ', '<svg class="ic" ') : ICON.arrow);

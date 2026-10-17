@@ -966,6 +966,88 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
 .plate,.fl,.phero-art .float,.ab-fig .plate,.acc .code{background:linear-gradient(160deg,rgba(70,70,76,.62),rgba(28,28,32,.72))!important;-webkit-backdrop-filter:blur(20px) saturate(115%)!important;backdrop-filter:blur(20px) saturate(115%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px rgba(255,255,255,.08),0 24px 40px -24px rgba(0,0,0,.85)!important}
 :root[data-theme="light"] :is(.plate,.fl,.phero-art .float,.ab-fig .plate,.acc .code){background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(240,240,244,.75))!important;box-shadow:inset 0 1px 0 #fff,0 20px 36px -24px rgba(30,40,30,.4)!important}
 
+/* =========================================================================
+   v4 — proper glassmorphism: see-through panes over soft light, crisp rims
+   ========================================================================= */
+:root{
+  --frost:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --glass-card:linear-gradient(135deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.06) 40%,rgba(255,255,255,.035) 100%);
+  --glass-in:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.03));
+  --card-depth:inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.1),inset 0 -1px 0 rgba(255,255,255,.04);
+  --card-drop:0 8px 32px rgba(0,0,0,.32),0 30px 70px -30px rgba(0,0,0,.6);
+  --orb-gold:rgba(223,187,118,.26); --orb-green:rgba(46,150,108,.34); --orb-teal:rgba(40,120,140,.2);
+}
+:root[data-theme="light"]{
+  --glass-card:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.42));
+  --glass-in:linear-gradient(135deg,rgba(255,255,255,.75),rgba(255,255,255,.45));
+  --card-depth:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.75);
+  --card-drop:0 8px 32px rgba(31,60,45,.12),0 30px 60px -34px rgba(31,60,45,.35);
+  --orb-gold:rgba(214,170,90,.32); --orb-green:rgba(60,160,115,.26); --orb-teal:rgba(90,170,190,.2);
+}
+
+/* soft light pools behind every group of cards — this is what the glass blurs */
+.sec>.wrap,.phero>.wrap{position:relative}
+.sec>.wrap::before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:8% -4% 0;
+  background:
+    radial-gradient(closest-side,var(--orb-green),transparent) 88% 62%/min(560px,70vw) min(560px,70vw) no-repeat,
+    radial-gradient(closest-side,var(--orb-gold),transparent) 10% 78%/min(440px,62vw) min(440px,62vw) no-repeat,
+    radial-gradient(closest-side,var(--orb-teal),transparent) 52% 30%/min(380px,56vw) min(380px,56vw) no-repeat;
+  animation:orbDrift 26s var(--e-io) infinite alternate}
+.sec:nth-of-type(even)>.wrap::before{background:
+    radial-gradient(closest-side,var(--orb-gold),transparent) 86% 30%/min(460px,64vw) min(460px,64vw) no-repeat,
+    radial-gradient(closest-side,var(--orb-green),transparent) 12% 70%/min(560px,72vw) min(560px,72vw) no-repeat,
+    radial-gradient(closest-side,var(--orb-teal),transparent) 55% 85%/min(360px,56vw) min(360px,56vw) no-repeat;animation-duration:32s}
+@keyframes orbDrift{to{transform:translate3d(2.5%,-3%,0) scale(1.06)}}
+
+/* the pane */
+.card,.cta{
+  background:radial-gradient(520px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,calc(var(--cglow) * .07)),transparent 46%),var(--frost),var(--ruled-bg,none),var(--margin-bg,none),var(--glass-card);
+  -webkit-backdrop-filter:blur(26px) saturate(170%);backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:var(--card-depth),var(--card-drop)}
+.cta{background:var(--frost),var(--glass-card)}
+.card:hover{box-shadow:var(--card-depth),0 14px 40px rgba(0,0,0,.38),0 40px 90px -36px rgba(0,0,0,.7)}
+:root[data-theme="light"] .card:hover{box-shadow:var(--card-depth),0 14px 40px rgba(31,60,45,.16),0 40px 80px -36px rgba(31,60,45,.4)}
+/* rim: bright where the light hits (top-left), fading round the pane */
+.card::after,.cta::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,calc(var(--cglow) * .9)),transparent 45%),
+  linear-gradient(140deg,rgba(255,255,255,.65) 0%,rgba(255,255,255,.18) 18%,rgba(255,255,255,.06) 45%,rgba(255,255,255,.04) 70%,rgba(255,255,255,.22) 100%);opacity:1}
+:root[data-theme="light"] .card::after,:root[data-theme="light"] .cta::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(176,138,69,calc(var(--cglow) * .7)),transparent 45%),linear-gradient(140deg,#fff,rgba(255,255,255,.5) 30%,rgba(15,34,25,.08) 70%,rgba(255,255,255,.7))}
+/* inner light: a soft top sheen and a faint diagonal glint */
+.card::before,.card.margin::before,.cy-card::before,.ph+.card::before{background:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0) 34%),
+    linear-gradient(115deg,transparent 28%,rgba(255,255,255,.06) 40%,rgba(255,255,255,0) 50%,transparent 58%)}
+:root[data-theme="light"] .card::before{background:linear-gradient(180deg,rgba(255,255,255,.7),transparent 38%),linear-gradient(115deg,transparent 28%,rgba(255,255,255,.55) 40%,transparent 54%)}
+.rail>.card{box-shadow:var(--card-depth),0 8px 28px rgba(0,0,0,.3)}
+
+/* panes inside panes */
+:is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.bk,.out,.fs-c,.inv,.eq-tx button,.tool-viz,.ppp,.tm-pre button,.po-feats li,.so,.ct-soc a){
+  background:var(--glass-in)!important;border-color:transparent!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 0 0 1px rgba(255,255,255,.09),0 6px 18px rgba(0,0,0,.18)!important}
+:root[data-theme="light"] :is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.bk,.out,.fs-c,.inv,.eq-tx button,.tool-viz,.ppp,.tm-pre button,.po-feats li){box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(15,34,25,.07),0 6px 16px rgba(31,60,45,.08)!important}
+:is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.eq-tx button,.tm-pre button):hover{background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px color-mix(in srgb,var(--brass) 45%,transparent),0 12px 26px rgba(0,0,0,.25)!important}
+:root[data-theme="light"] :is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.eq-tx button,.tm-pre button):hover{background:linear-gradient(135deg,#fff,rgba(255,255,255,.7))!important}
+
+/* floating plates and bars share the same glass */
+.plate,.fl,.phero-art .float,.ab-fig .plate,.acc .code{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.06))!important;
+  -webkit-backdrop-filter:blur(22px) saturate(170%)!important;backdrop-filter:blur(22px) saturate(170%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.14),0 10px 30px rgba(0,0,0,.35)!important}
+:root[data-theme="light"] :is(.plate,.fl,.phero-art .float,.ab-fig .plate,.acc .code){background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.55))!important;box-shadow:inset 0 1px 0 #fff,0 10px 30px rgba(31,60,45,.18)!important}
+.mbar{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.05))!important;-webkit-backdrop-filter:blur(24px) saturate(180%)!important;backdrop-filter:blur(24px) saturate(180%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.1),0 12px 40px rgba(0,0,0,.45)!important}
+:root[data-theme="light"] .mbar{background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.6))!important}
+.nav{background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.03))!important;-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 0 0 1px rgba(255,255,255,.07),0 10px 40px rgba(0,0,0,.35)}
+.nav.solid{background:linear-gradient(135deg,rgba(20,26,24,.72),rgba(10,14,12,.62))!important}
+:root[data-theme="light"] .nav{background:linear-gradient(135deg,rgba(255,255,255,.75),rgba(255,255,255,.5))!important}
+
+/* smoother hover physics */
+.card{transition:box-shadow 1s var(--e-soft),transform 1s var(--e-soft),--cglow .9s var(--e-silk)}
+a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-6px)}
+@media (max-width:760px){
+  .card,.cta{-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+  .sec>.wrap::before{animation:none;inset:4% -10% 0}
+}
+@media (prefers-reduced-motion:reduce){.sec>.wrap::before{animation:none}}
+.sec{overflow-x:clip}
+
 .po-g{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,72px);align-items:center}
 .po-feats{display:grid;gap:10px;margin-top:30px;max-width:560px}
 .po-feats li{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:14px 16px;border-radius:10px;border:1px solid var(--line-w);background:color-mix(in srgb,var(--panel) 75%,transparent)}

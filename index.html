@@ -786,6 +786,69 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
 .proc-s:hover .pn i{transform:scaleX(1.15)}
 @media (prefers-reduced-motion:reduce){.btn .rip{display:none}.btn,.card{transition:none}}
 
+/* =========================================================================
+   Mobile — one calm action bar, tighter rhythm, less on screen at once
+   ========================================================================= */
+.mbar{display:none}
+@media (max-width:760px){
+  .dock,.fab{display:none!important}
+  .mbar{position:fixed;z-index:58;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:7px;border-radius:20px;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 70%,transparent),color-mix(in srgb,var(--bg) 58%,transparent));-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
+    box-shadow:var(--hi),inset 0 0 0 1px var(--line-w),0 24px 50px -20px rgba(0,0,0,.85);transition:transform .7s var(--e-soft),opacity .5s}
+  .mbar::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(100deg,transparent 10%,var(--edge-a) 40%,transparent 70%,var(--edge-b));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:.6}
+  .mbar.mb-hide{transform:translateY(calc(100% + 24px));opacity:0}
+  .menu-open .mbar,html:has(.bot.open) .mbar{transform:translateY(calc(100% + 24px));opacity:0;pointer-events:none}
+  .mb-ask{display:flex;align-items:center;gap:10px;height:46px;padding:0 12px 0 0;border-radius:14px;text-align:left}
+  .mb-ask .seal{width:46px;height:46px;border-radius:13px}
+  .mb-ask .seal b{font-size:17px}
+  .mb-t{display:grid;line-height:1.05}
+  .mb-t small{font:500 9.5px/1.2 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+  .mb-t b{font:500 15px/1.1 var(--f-display);letter-spacing:-.01em}
+  .mbar .mb-enrol{--h:46px;--pad:18px;justify-self:end;font-size:11.5px;letter-spacing:.16em;border-radius:13px}
+  .mbar .mb-enrol:hover{letter-spacing:.16em}
+  .mb-ic{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;color:var(--ink-2);background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--line-w)}
+  .mb-ic svg{width:18px;height:18px}
+  .bot{bottom:calc(10px + env(safe-area-inset-bottom,0px))!important;height:calc(100svh - 100px)!important}
+  .foot{padding-bottom:110px!important}
+  .menu-foot{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .menu-foot .btn{width:100%}
+  .menu-foot .btn-pri,.menu-foot .mf-portal{grid-column:1/-1}
+  .menu-foot .btn-sm{--h:46px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-radius:12px}
+
+  /* rhythm */
+  .sec{padding:56px 0}
+  .sec.tight{padding:44px 0}
+  .sec-head{margin-bottom:26px;gap:12px}
+  .title{font-size:clamp(2rem,9vw,2.6rem);line-height:1.05}
+  .title-sm{font-size:clamp(1.7rem,7.4vw,2.1rem)}
+  .lede{font-size:15.5px;line-height:1.65}
+  .phero{padding:calc(var(--nav-h) + 46px) 0 30px}
+  .phero .display{font-size:clamp(2.5rem,11vw,3.2rem);line-height:1.02}
+  .crumbs{margin-bottom:18px}
+  .rail-ctl{margin-top:2px;gap:12px}
+  .rail-n{min-width:52px}
+
+  /* reveals: no blur on phones, shorter travel */
+  html.js [data-rv]{filter:none;transform:translateY(16px);transition:opacity .8s var(--e-out),transform .9s var(--e-out)}
+  html.js [data-rv="scale"]{transform:scale(.98)}
+
+  /* button groups stack cleanly */
+  .hero-cta,.cta-row,.ws-cta{display:grid!important;grid-template-columns:1fr;gap:10px}
+  .hero-cta .btn,.cta-row .btn,.ws-cta .btn{width:100%}
+  .cta-row .btn-ghost,.hero-cta .btn-ghost{width:auto;justify-self:center;--h:40px}
+
+  /* cards breathe less */
+  .card::before{background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 24%)}
+  .pad-l{padding:24px 20px}
+  .cta{padding:30px 22px;border-radius:24px}
+  .cta .cta-ph{display:none}
+  .cta.has-ph{display:block}
+}
+@media (max-width:760px) and (prefers-color-scheme:light){}
+:root[data-theme="light"] .mbar{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.66))}
+.btn-ghost>.btn-sheen{display:none}
+
 /* ---------------------------------------------------------------- hero */
 .hero{position:relative;min-height:100svh;display:grid;align-content:center;padding:calc(var(--nav-h) + 40px) 0 104px}
 .hero-g{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(20px,4vw,64px);align-items:center}
@@ -1115,6 +1178,45 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
 .res{padding:22px}.res b{display:block;font:500 3rem/1 var(--f-display);color:var(--brass)}.res span{display:block;margin-top:6px;font-weight:700}.res small{color:var(--ink-3)}
 .rev{padding:24px}.rev p{font:italic 500 1.2rem/1.4 var(--f-display)}.rev small{display:block;margin-top:12px;color:var(--ink-3)}
 
+/* ---------------------------------------------------------------- phones */
+@media (max-width:760px){
+  .m-hide{display:none}
+  .hero{padding-top:calc(var(--nav-h) + 34px);padding-bottom:92px}
+  .hero-copy .display{margin-top:16px}
+  .hero-copy .lede{margin-top:18px}
+  .hero-cta{margin-top:26px}
+  .hero-facts{margin-top:26px}
+  .hero-fig{width:min(340px,84%);margin-top:20px}
+  .fl{display:none}
+  .plate{left:-4%;bottom:7%;padding:12px 16px;border-radius:14px}
+  .plate::after{display:none}
+  .plate .pl-sub{padding-bottom:0}
+  .hero-credo{margin-top:22px;padding-top:18px}
+  .tape{bottom:16px}
+  .rec-ph{display:none}
+  .rec-side{gap:14px}
+  .journal{padding:12px 16px 12px 44px}
+  .acc-grid{--rw-m:88%}
+  .acc{padding:0 20px 22px}
+  .acc-ph{margin:0 -20px 18px;height:110px}
+  .workshop{padding:24px 20px}
+  .ws-lv{padding:13px 14px;grid-template-columns:52px 1fr auto}
+  .cycle{padding-top:56px}
+  .cy-steps{--rw-c:86%}
+  .eq-tx{--rw-m:78%;margin-top:20px}
+  .eq-tx button{height:100%;align-items:start;padding:14px}
+  .eq-tx button small{align-self:end}
+  .eq-box{padding:18px 14px}
+  .eq-bar{height:90px}
+  .coa{--vh:56vh}
+  .vid{padding:6px;border-radius:20px}
+  .vid-face{border-radius:15px}
+  .chapters{margin:18px 0}
+  .chapters li{padding:9px 0;font-size:14px}
+  .q{padding:26px 22px 22px 50px}
+  .q blockquote{font-size:1.3rem}
+}
+
 
 /* ==========================================================================
    NEXLYR SOLUTIONS — studio credit bar. Official logo, one name, one button.
@@ -1168,11 +1270,11 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
   .nxb a.nxb__id:hover .nxb__mk svg,.nxb a.nxb__go:hover{transform:none}
 }
 @media print{.nxb{display:none!important}}
-</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://sir-rohail-ahmed.vercel.app/#person", "name": "Sir Rohail Ahmed", "alternateName": ["Rohail Ahmed"], "jobTitle": "O Level and A Level Accounting Teacher", "url": "https://sir-rohail-ahmed.vercel.app/", "image": "https://sir-rohail-ahmed.vercel.app/rohail-ahmed.jpg", "description": "Teaches Cambridge O Level 7707 and AS & A Level 9706 Accounting in Karachi and online. Founding member of Credo School & College System.", "knowsAbout": ["Accounting", "Cambridge O Level Accounting 7707", "Cambridge AS & A Level Accounting 9706", "Financial accounting", "Cost and management accounting"], "affiliation": {"@type": "EducationalOrganization", "name": "Credo College", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}}, "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://www.facebook.com/SirRohailAhmed/", "https://www.instagram.com/rohailahmed12/", "https://www.youtube.com/@AccountingbySirRohail"]}</script></head><body data-page="index"><a class="skip" href="#main">Skip to content</a><div class="bg-base" aria-hidden="true"></div><div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><canvas id="bg3d" aria-hidden="true"></canvas><div class="bg-veil" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div class="loader" aria-hidden="true"><div class="ld"><div class="ld-t"><span>Dr<b id="ldDr">0</b></span><span>Cr<b id="ldCr">0</b></span></div><div class="ld-n">Sir Rohail Ahmed</div></div></div><header class="nav"><a class="brand" href="index.html" aria-label="Sir Rohail Ahmed, home"><span class="seal" aria-hidden="true"><b>RA</b></span><span class="brand-t"><b>Sir Rohail Ahmed</b><span>Accounting · O &amp; A Level</span></span></a><nav class="nav-links" aria-label="Main"><a href="courses.html">Courses</a><a href="syllabus.html">Syllabus</a><a href="past-papers.html">Past papers</a><a href="lab.html">Lab</a><a href="portal.html">Portal</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><div class="nav-r"><button class="nav-search" type="button" data-cmdk aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button><a class="btn btn-pri btn-sm btn-enrol" href="contact.html#enrol">Enrol</a><button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button></div></header><div class="menu" id="menu" aria-hidden="true"><nav aria-label="Mobile"><a href="index.html" aria-current="page"><small>01</small>Home<i>f.01</i></a><a href="courses.html"><small>02</small>Courses<i>f.02</i></a><a href="syllabus.html"><small>03</small>Syllabus<i>f.03</i></a><a href="past-papers.html"><small>04</small>Past papers<i>f.04</i></a><a href="lab.html"><small>05</small>Lab<i>f.05</i></a><a href="portal.html"><small>06</small>Portal<i>f.06</i></a><a href="about.html"><small>07</small>About<i>f.07</i></a><a href="contact.html"><small>08</small>Contact<i>f.08</i></a></nav><div class="menu-foot"><a class="btn btn-pri" data-wa="Assalam o Alaikum, I would like to enrol with Sir Rohail Ahmed." href="https://wa.me/923060233883?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20enrol%20with%20Sir%20Rohail%20Ahmed." target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="portal.html">Student portal</a><button class="btn" type="button" data-theme-btn>Light / dark</button></div></div><main id="main"><!-- ============================== HERO -->
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://sir-rohail-ahmed.vercel.app/#person", "name": "Sir Rohail Ahmed", "alternateName": ["Rohail Ahmed"], "jobTitle": "O Level and A Level Accounting Teacher", "url": "https://sir-rohail-ahmed.vercel.app/", "image": "https://sir-rohail-ahmed.vercel.app/rohail-ahmed.jpg", "description": "Teaches Cambridge O Level 7707 and AS & A Level 9706 Accounting in Karachi and online. Founding member of Credo School & College System.", "knowsAbout": ["Accounting", "Cambridge O Level Accounting 7707", "Cambridge AS & A Level Accounting 9706", "Financial accounting", "Cost and management accounting"], "affiliation": {"@type": "EducationalOrganization", "name": "Credo College", "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}}, "address": {"@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK"}, "sameAs": ["https://www.facebook.com/SirRohailAhmed/", "https://www.instagram.com/rohailahmed12/", "https://www.youtube.com/@AccountingbySirRohail"]}</script></head><body data-page="index"><a class="skip" href="#main">Skip to content</a><div class="bg-base" aria-hidden="true"></div><div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><canvas id="bg3d" aria-hidden="true"></canvas><div class="bg-veil" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div class="loader" aria-hidden="true"><div class="ld"><div class="ld-t"><span>Dr<b id="ldDr">0</b></span><span>Cr<b id="ldCr">0</b></span></div><div class="ld-n">Sir Rohail Ahmed</div></div></div><header class="nav"><a class="brand" href="index.html" aria-label="Sir Rohail Ahmed, home"><span class="seal" aria-hidden="true"><b>RA</b></span><span class="brand-t"><b>Sir Rohail Ahmed</b><span>Accounting · O &amp; A Level</span></span></a><nav class="nav-links" aria-label="Main"><a href="courses.html">Courses</a><a href="syllabus.html">Syllabus</a><a href="past-papers.html">Past papers</a><a href="lab.html">Lab</a><a href="portal.html">Portal</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><div class="nav-r"><button class="nav-search" type="button" data-cmdk aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button><a class="btn btn-pri btn-sm btn-enrol" href="contact.html#enrol">Enrol</a><button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button></div></header><div class="menu" id="menu" aria-hidden="true"><nav aria-label="Mobile"><a href="index.html" aria-current="page"><small>01</small>Home<i>f.01</i></a><a href="courses.html"><small>02</small>Courses<i>f.02</i></a><a href="syllabus.html"><small>03</small>Syllabus<i>f.03</i></a><a href="past-papers.html"><small>04</small>Past papers<i>f.04</i></a><a href="lab.html"><small>05</small>Lab<i>f.05</i></a><a href="portal.html"><small>06</small>Portal<i>f.06</i></a><a href="about.html"><small>07</small>About<i>f.07</i></a><a href="contact.html"><small>08</small>Contact<i>f.08</i></a></nav><div class="menu-foot"><a class="btn btn-pri" data-wa="Assalam o Alaikum, I would like to enrol with Sir Rohail Ahmed." href="https://wa.me/923060233883?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20enrol%20with%20Sir%20Rohail%20Ahmed." target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-sm mf-portal" href="portal.html">Student portal</a><button class="btn btn-sm" type="button" data-theme-btn>Light / dark</button><button class="btn btn-sm" type="button" data-sound-toggle>Sound</button></div></div><main id="main"><!-- ============================== HERO -->
 <section class="hero" data-shape="tacc" data-shape-x=".535" data-shape-y=".04" data-shape-s=".93" data-shape-mx="0" data-shape-my="-.4" data-shape-ms=".6" data-shape-ma=".28">
   <div class="wrap hero-g">
     <div class="hero-copy">
-      <p class="eyebrow" data-rv>O Level 7707 &middot; AS &amp; A Level 9706 &middot; Karachi</p>
+      <p class="eyebrow" data-rv>O Level 7707 &middot; AS &amp; A Level 9706<span class="m-hide"> &middot; Karachi</span></p>
       <h1 class="display" data-split>Accounting, taught until it <em>balances.</em></h1>
       <p class="lede" data-rv style="--d:.35s">Sir Rohail Ahmed has taught Cambridge O Level and A Level Accounting for more than twenty years. He teaches it from first principles: where each figure comes from, which side it belongs on, and how the examiner will mark it.</p>
       <div class="hero-cta" data-rv style="--d:.45s">
@@ -1479,7 +1581,7 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
       <div class="meta"><span class="folio">f. 05 &mdash; Duality</span><span class="hair"></span></div>
       <h2 class="title" data-split>The equation <em>never breaks.</em></h2>
       <p class="lede" data-rv>Pick a transaction. Both entries post, and Assets = Liabilities + Equity stays level. This is duality, and every topic after it depends on it.</p>
-      <div class="eq-tx" data-rv role="group" aria-label="Transactions"></div>
+      <div class="eq-tx" data-rv data-rail="m" role="group" aria-label="Transactions"></div>
       <button class="btn btn-sm btn-ghost eq-reset" type="button">Start again</button>
     </div>
     <div class="eq-box card ruled" data-rv="scale">
@@ -1647,7 +1749,7 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.14 6.44 2.14 11.9c0 1.75.46 3.45 1.32 4.95L2.05 22l5.28-1.38a9.86 9.86 0 0 0 4.71 1.2c5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.8-4.17-4.95-4.37-.14-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.58-.36.77-.36l.55.01c.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.15.12.32.02.51-.09.2-.14.32-.28.49l-.42.49c-.14.14-.28.29-.12.57.16.29.72 1.18 1.54 1.91 1.06.94 1.95 1.23 2.23 1.37.28.15.44.12.6-.07.17-.2.7-.81.88-1.09.19-.29.37-.24.63-.14.25.09 1.62.76 1.9.9.28.15.46.22.53.34.07.12.07.68-.17 1.34z"/></svg>
         Connect
       </a>
-    </div><div class="foot-meta"><span>© <span data-year>2026</span> Sir Rohail Ahmed · Accounting · Karachi</span><span>Syllabus summaries from Cambridge International’s published syllabuses. Not affiliated with Cambridge.</span></div></div></footer><div class="dock" role="toolbar" aria-label="Display"><button type="button" data-theme-btn aria-label="Switch light or dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4"/></svg></button><button type="button" data-sound-btn aria-label="Sound"></button><button type="button" data-top-btn aria-label="Back to top"><svg class="ring" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></div><button class="fab" type="button" aria-controls="bot" aria-expanded="false"><span class="seal" aria-hidden="true"><b>RA</b></span><span class="t">Ask the Ledger</span></button><div class="bot" id="bot" role="dialog" aria-label="Ask the Ledger" aria-hidden="true"><div class="bot-h"><span class="seal" aria-hidden="true"><b>RA</b></span><div><b>The Ledger</b><small><i></i>Help desk · answers instantly</small></div><button class="xbtn" type="button" aria-label="Close">×</button></div><div class="bot-log" aria-live="polite"></div><div class="bot-chips"><button class="chip" type="button">Fees and timings</button><button class="chip" type="button">Recorded workshop</button><button class="chip" type="button" data-q="Are classes online or on-site?">Online or on-site?</button><button class="chip" type="button" data-q="How long is 9706 paper 2?">9706 Paper 2 length</button><button class="chip" type="button" data-q="ROCE formula">ROCE formula</button><button class="chip" type="button" data-q="What is prudence">What is prudence?</button><button class="chip" type="button" data-q="bank reconciliation">Bank reconciliation</button></div><form class="bot-f" autocomplete="off"><input type="text" placeholder="Ask about classes, a topic or a formula…" aria-label="Your question"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form></div><div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true"><div class="scrim"></div><div class="cmdk-box"><div class="cmdk-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdkIn" placeholder="Jump to a page, topic, tool or action…" autocomplete="off" aria-label="Search"><kbd>esc</kbd></div><div class="cmdk-list" id="cmdkList" role="listbox"></div><div class="cmdk-foot"><span>↑↓ move</span><span>↵ open</span><span>/ or ⌘K</span></div></div></div><div class="modal" id="modal" aria-hidden="true"><div class="scrim" data-close></div><div class="modal-box" role="dialog" aria-modal="true"><button class="xbtn" type="button" data-close aria-label="Close">×</button><div id="modalBody"></div></div></div><div class="cursor" aria-hidden="true"><i class="c-dot"></i><i class="c-ring"></i></div><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script><script src="config.js"></script><script>/* ---------------------------------------------------------------------------
+    </div><div class="foot-meta"><span>© <span data-year>2026</span> Sir Rohail Ahmed · Accounting · Karachi</span><span>Syllabus summaries from Cambridge International’s published syllabuses. Not affiliated with Cambridge.</span></div></div></footer><div class="dock" role="toolbar" aria-label="Display"><button type="button" data-theme-btn aria-label="Switch light or dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4"/></svg></button><button type="button" data-sound-btn aria-label="Sound"></button><button type="button" data-top-btn aria-label="Back to top"><svg class="ring" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></div><button class="fab" type="button" aria-controls="bot" aria-expanded="false"><span class="seal" aria-hidden="true"><b>RA</b></span><span class="t">Ask the Ledger</span></button><nav class="mbar" aria-label="Quick actions"><button class="mb-ask" type="button" data-ask><span class="seal" aria-hidden="true"><b>RA</b></span><span class="mb-t"><small>Ask</small><b>the Ledger</b></span></button><a class="btn btn-pri mb-enrol" data-wa="Assalam o Alaikum, I would like to enrol in Accounting classes with Sir Rohail Ahmed." href="https://wa.me/923060233883?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20enrol%20in%20Accounting%20classes%20with%20Sir%20Rohail%20Ahmed." target="_blank" rel="noopener">Enrol <svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a><button class="mb-ic" type="button" data-theme-btn aria-label="Switch light or dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4"/></svg></button></nav><div class="bot" id="bot" role="dialog" aria-label="Ask the Ledger" aria-hidden="true"><div class="bot-h"><span class="seal" aria-hidden="true"><b>RA</b></span><div><b>The Ledger</b><small><i></i>Help desk · answers instantly</small></div><button class="xbtn" type="button" aria-label="Close">×</button></div><div class="bot-log" aria-live="polite"></div><div class="bot-chips"><button class="chip" type="button">Fees and timings</button><button class="chip" type="button">Recorded workshop</button><button class="chip" type="button" data-q="Are classes online or on-site?">Online or on-site?</button><button class="chip" type="button" data-q="How long is 9706 paper 2?">9706 Paper 2 length</button><button class="chip" type="button" data-q="ROCE formula">ROCE formula</button><button class="chip" type="button" data-q="What is prudence">What is prudence?</button><button class="chip" type="button" data-q="bank reconciliation">Bank reconciliation</button></div><form class="bot-f" autocomplete="off"><input type="text" placeholder="Ask about classes, a topic or a formula…" aria-label="Your question"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form></div><div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true"><div class="scrim"></div><div class="cmdk-box"><div class="cmdk-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdkIn" placeholder="Jump to a page, topic, tool or action…" autocomplete="off" aria-label="Search"><kbd>esc</kbd></div><div class="cmdk-list" id="cmdkList" role="listbox"></div><div class="cmdk-foot"><span>↑↓ move</span><span>↵ open</span><span>/ or ⌘K</span></div></div></div><div class="modal" id="modal" aria-hidden="true"><div class="scrim" data-close></div><div class="modal-box" role="dialog" aria-modal="true"><button class="xbtn" type="button" data-close aria-label="Close">×</button><div id="modalBody"></div></div></div><div class="cursor" aria-hidden="true"><i class="c-dot"></i><i class="c-ring"></i></div><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script><script src="config.js"></script><script>/* ---------------------------------------------------------------------------
    RA.DATA — syllabus, papers, formulae, terms, practice banks.
    Syllabus outcomes are summarised in our own words from Cambridge
    International's published syllabuses:
@@ -2290,6 +2392,7 @@ function nav() {
   const upd = () => {
     const y = scrollY;
     n.classList.toggle('solid', y > 30);
+    const mb = $('.mbar'); if (mb) { const end = y + innerHeight > document.documentElement.scrollHeight - 160; mb.classList.toggle('mb-hide', y > 240 && y > lastY + 2 && !end); if (y < lastY - 2 || end) mb.classList.remove('mb-hide'); }
     if (!root.classList.contains('menu-open')) n.classList.toggle('hide', y > 260 && y > lastY + 2);
     if (y < lastY - 2) n.classList.remove('hide');
     lastY = y;
@@ -2436,6 +2539,7 @@ function dock() {
     const paint = () => { sb.setAttribute('aria-pressed', String(Snd.on)); sb.innerHTML = Snd.on ? ICON.sound : ICON.mute; sb.setAttribute('aria-label', Snd.on ? 'Turn sound off' : 'Turn sound on'); };
     paint(); sb.addEventListener('click', () => { Snd.set(!Snd.on); paint(); RA.toast(Snd.on ? 'Sound on' : 'Sound off', 1400); });
   }
+  $$('[data-sound-toggle]').forEach(t => { const p = () => { t.textContent = Snd.on ? 'Sound: on' : 'Sound: off'; t.setAttribute('aria-pressed', String(Snd.on)); }; p(); t.addEventListener('click', () => { Snd.set(!Snd.on); p(); const sb = $('[data-sound-btn]'); if (sb) sb.innerHTML = Snd.on ? ICON.sound : ICON.mute; }); });
   const top = $('[data-top-btn]'), ring = top && $('circle', top);
   if (top) {
     const upd = () => { const h = document.documentElement.scrollHeight - innerHeight, p = h > 0 ? scrollY / h : 0; if (ring) ring.style.setProperty('--off', (100.5 * (1 - p)).toFixed(1)); };
@@ -2579,6 +2683,7 @@ function bot() {
   function close() { box.classList.remove('open'); box.setAttribute('aria-hidden', 'true'); fab.setAttribute('aria-expanded', 'false'); Snd.close(); }
   RA.bot = { open, ask: q => { open(); setTimeout(() => { say(RA.esc(q), 'u'); reply(answer(q)); }, 200); } };
   fab.addEventListener('click', () => box.classList.contains('open') ? close() : open());
+  $$('[data-ask]').forEach(b => b.addEventListener('click', () => fab.click()));
   $('.xbtn', box).addEventListener('click', close);
   addEventListener('keydown', e => { if (e.key === 'Escape' && box.classList.contains('open')) close(); });
   form.addEventListener('submit', e => { e.preventDefault(); const v = inp.value.trim(); if (!v) return; inp.value = ''; say(RA.esc(v), 'u'); reply(answer(v)); });
@@ -2999,10 +3104,11 @@ function place(o) {
   { const hw = 3.4 * (o.s || 1) * (mob ? (o.ms || 0.72) : fit), room = halfW - hw * 0.92; if (room > 0 && Math.abs(tgt.x) > room) tgt.x = Math.sign(tgt.x) * room; }
   tgt.y = (mob ? (o.my != null ? o.my : (o.y || 0)) : (o.y || 0)) * halfH;
   tgt.s = (o.s || 1) * (mob ? (o.ms || 0.72) : fit);
-  tgt.rx = o.rx || 0; tgt.ry = o.ry || 0; tgt.a = (o.a == null ? 1 : o.a) * (mob ? (o.ma == null ? .5 : o.ma) : 1);
+  tgt.rx = o.rx || 0; tgt.ry = o.ry || 0; tgt.a = (o.a == null ? 1 : o.a) * (mob ? (o.ma == null ? .4 : o.ma) : 1); if (mob) tgt.a = Math.min(tgt.a, .22);
   autoSpin = o.spin || 0;
 }
 BG.morph = function (key, opt) {
+  if (MOB() && !(opt && opt._hero) && key !== 'cloud') { key = 'cloud'; opt = { a: .55 }; }
   if (!BG.ready) { BG._pending = [key, opt]; return; }
   BG._last = { key, opt }; place(opt);
   if (key === cur) return;
@@ -3025,7 +3131,7 @@ BG.current = () => cur;
 function watchSections() {
   const els = RA.$$('[data-shape]'); if (!els.length) return;
   const opt = el => { const o = {}; ['x', 'y', 's', 'mx', 'my', 'ms', 'a', 'ma', 'spin', 'rx', 'ry'].forEach(k => { const v = el.getAttribute('data-shape-' + k); if (v != null) o[k] = parseFloat(v); }); return o; };
-  const go = el => BG.morph(el.dataset.shape, opt(el));
+  const go = el => { const o = opt(el); if (el === els[0]) o._hero = 1; BG.morph(el.dataset.shape, o); };
   const fontsOk = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1400))]) : Promise.resolve();
   fontsOk.then(() => {
     if (!('IntersectionObserver' in window)) { go(els[0]); return; }

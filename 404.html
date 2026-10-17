@@ -886,6 +886,56 @@ a.card:not([data-tilt]):hover,.proc-s:hover{transform:translateY(-5px)}
 :root[data-theme="light"] .mbar{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.66))}
 .btn-ghost>.btn-sheen{display:none}
 
+/* =========================================================================
+   v3 cards — real frosted glass: grain, light-catching rim, thickness, backlight
+   ========================================================================= */
+:root{
+  --frost:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --glass-card:linear-gradient(162deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,.05) 30%,rgba(255,255,255,.022) 62%,rgba(255,255,255,.055) 100%),linear-gradient(180deg,rgba(14,38,28,.28),rgba(6,16,12,.36));
+  --glass-in:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 60%,rgba(255,255,255,.04));
+  --card-depth:inset 0 1px 0 rgba(255,250,235,.2),inset 0 -1px 0 rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.065),inset 0 0 30px rgba(255,255,255,.015);
+  --card-drop:0 1px 1px rgba(0,0,0,.35),0 28px 56px -30px rgba(0,0,0,.8),0 60px 120px -70px rgba(42,138,98,.45);
+}
+:root[data-theme="light"]{
+  --frost:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .2 0 0 0 0 .15 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --glass-card:linear-gradient(162deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.62) 40%,rgba(255,255,255,.5) 100%);
+  --glass-in:linear-gradient(160deg,rgba(255,255,255,.85),rgba(255,255,255,.55));
+  --card-depth:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(15,34,25,.08),inset 0 0 0 1px rgba(255,255,255,.7);
+  --card-drop:0 1px 2px rgba(30,50,35,.12),0 26px 50px -30px rgba(30,50,35,.4),0 50px 100px -60px rgba(42,138,98,.25);
+}
+.card{border-radius:24px;
+  background:radial-gradient(520px circle at var(--mx,50%) var(--my,0%),rgba(var(--glow-rgb),calc(var(--cglow) * .09)),transparent 46%),var(--frost),var(--ruled-bg,none),var(--margin-bg,none),var(--glass-card);
+  -webkit-backdrop-filter:blur(28px) saturate(185%) brightness(1.06);backdrop-filter:blur(28px) saturate(185%) brightness(1.06);
+  box-shadow:var(--card-depth),var(--card-drop)}
+.card:hover{box-shadow:var(--card-depth),0 1px 1px rgba(0,0,0,.35),0 40px 80px -36px rgba(0,0,0,.9),0 70px 140px -70px rgba(42,138,98,.6)}
+:root[data-theme="light"] .card:hover{box-shadow:var(--card-depth),0 1px 2px rgba(30,50,35,.12),0 40px 70px -34px rgba(30,50,35,.45)}
+/* light catching the top rim + a faint diagonal reflection (replaces corner ticks) */
+.card::before,.card.margin::before,.cy-card::before,.ph+.card::before,:root[data-theme="light"] .card::before{
+  background:
+    linear-gradient(90deg,transparent 6%,rgba(255,244,218,.6) 50%,transparent 94%) top center/100% 1px no-repeat,
+    linear-gradient(180deg,rgba(255,255,255,.075),transparent 28%),
+    linear-gradient(118deg,transparent 30%,rgba(255,255,255,.045) 42%,rgba(255,255,255,0) 52%,transparent 60%),
+    radial-gradient(120% 70% at 0% 0%,rgba(255,236,196,.07),transparent 55%)}
+:root[data-theme="light"] .card::before{background:linear-gradient(90deg,transparent 6%,#fff 50%,transparent 94%) top center/100% 1px no-repeat,linear-gradient(180deg,rgba(255,255,255,.8),transparent 32%),linear-gradient(118deg,transparent 30%,rgba(255,255,255,.5) 42%,transparent 56%)}
+.card::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(var(--glow-rgb),calc(var(--cglow) * .95)),transparent 45%),linear-gradient(150deg,rgba(255,240,210,.55),rgba(255,236,196,.1) 22%,rgba(255,255,255,.03) 50%,rgba(95,199,150,.08) 78%,rgba(95,199,150,.3));opacity:.9}
+:root[data-theme="light"] .card::after{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(var(--glow-rgb),calc(var(--cglow) * .8)),transparent 45%),linear-gradient(150deg,rgba(176,138,69,.45),rgba(255,255,255,.6) 30%,rgba(42,138,98,.2))}
+.rail>.card{box-shadow:var(--card-depth),0 22px 40px -28px rgba(0,0,0,.85)}
+.cta{background:radial-gradient(800px 400px at 85% 0%,rgba(223,187,118,.2),transparent 60%),radial-gradient(700px 400px at 0% 100%,rgba(42,138,98,.26),transparent 60%),var(--frost),var(--glass-card);box-shadow:var(--card-depth),var(--card-drop);-webkit-backdrop-filter:blur(28px) saturate(185%);backdrop-filter:blur(28px) saturate(185%)}
+
+/* glass inside glass: list boxes, stats, tool previews */
+.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.bk,.out,.fs-c,.inv,.eq-tx button,.tool-viz,.ppp,.tm-pre button,.po-feats li,.so,.ct-soc a{
+  background:var(--frost),var(--glass-in)!important;border-color:transparent!important;
+  box-shadow:inset 0 1px 0 rgba(255,250,235,.12),inset 0 -1px 0 rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.06),0 12px 26px -20px rgba(0,0,0,.7)!important}
+:root[data-theme="light"] :is(.cv,.cw,.coa-sec,.rat,.con,.ws-lv,.bk,.out,.fs-c,.inv,.eq-tx button,.tool-viz,.ppp,.tm-pre button,.po-feats li){box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(15,34,25,.08),0 12px 24px -20px rgba(30,50,35,.35)!important}
+.cv:hover,.cw:hover,.coa-sec:hover,.rat:hover,.con:hover,.ws-lv:hover,.eq-tx button:hover,.tm-pre button:hover{
+  background:var(--frost),linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.03) 60%,rgba(255,255,255,.06))!important;
+  box-shadow:inset 0 1px 0 rgba(255,250,235,.18),inset 0 0 0 1px color-mix(in srgb,var(--brass) 40%,transparent),0 18px 34px -22px rgba(0,0,0,.85)!important}
+.eq-tx button.done{box-shadow:inset 0 1px 0 rgba(255,250,235,.12),inset 0 0 0 1px color-mix(in srgb,var(--green) 45%,transparent)!important}
+.cv,.cw,.coa-sec,.rat,.con,.bk,.out{border-radius:18px}
+.ws-lv,.eq-tx button,.tool-viz,.fs-c,.inv{border-radius:16px}
+.card .card{box-shadow:var(--card-depth)}
+@media (max-width:760px){.card{-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);border-radius:22px}}
+
 .nf{min-height:92vh;display:grid;align-content:center}
 .nf-stamp{margin-bottom:26px;font-size:15px}
 .nf-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}

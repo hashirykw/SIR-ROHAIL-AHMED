@@ -1440,6 +1440,51 @@ input[type=range]::-webkit-slider-thumb{border-radius:50%;background:var(--v-gol
 .brand-t b{overflow:hidden;text-overflow:ellipsis}
 .nav-r{flex:none}
 .menu-foot .btn:not(.btn-pri){grid-column:auto;width:100%;min-width:0}
+/* mobile: keep every headline inside the screen and never let anything widen the page */
+html,body{overflow-x:clip}
+@media (max-width:760px){
+  .display,.hero-copy .display{font-size:min(clamp(2.8rem,1.2rem + 6vw,7.4rem),12.4vw)}
+  .title{font-size:min(var(--t-2xl),10.6vw)}
+  .title-sm{font-size:min(clamp(2rem,1.2rem + 2.6vw,3.6rem),9vw)}
+  :is(.display,.title,.title-sm,h1,h2) em,[data-split-done] em{-webkit-text-stroke-width:1.4px}
+  .wrap{padding-left:18px;padding-right:18px}
+}
+
+/* ================================================================ VERZISH sticky stack: cards arrive from below,
+   pin under the nav and pile up; the ones underneath sink back and dim */
+[data-stack]{display:grid;grid-template-columns:minmax(0,1fr);gap:0;position:relative}
+[data-stack]>*{position:sticky;top:calc(100px + var(--si,0) * 14px);margin:0 0 7vh;transform-origin:50% 0;will-change:transform,filter}
+[data-stack]>:last-child{margin-bottom:0}
+[data-stack]>.card{background:rgb(13 11 19 / .97);-webkit-backdrop-filter:none;backdrop-filter:none;border-color:var(--v-line-2);box-shadow:0 -30px 60px -10px rgb(0 0 0 / .65)}
+[data-stack]>.card:hover{background:rgb(20 17 29 / .98)}
+/* procedure entries become wide ledger slides */
+.proc[data-stack] .proc-s{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1.2fr) minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:clamp(24px,4vw,56px);row-gap:12px;
+  min-height:clamp(250px,36vh,330px);padding:clamp(26px,3.4vw,44px);border-radius:var(--r-4)}
+.proc[data-stack] .proc-s .pn{grid-column:1;grid-row:1 / -1;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:18px}
+.proc[data-stack] .proc-s .pn b{font-size:clamp(4.6rem,3rem + 4vw,7.6rem);-webkit-text-stroke-width:1.4px;filter:drop-shadow(0 0 12px rgb(155 123 255 / .45))}
+.proc[data-stack] .proc-s .pn i{display:none}
+.proc[data-stack] .proc-s h3{grid-column:2;align-self:end;font:900 clamp(1.9rem,1.3rem + 1.8vw,3rem)/.9 var(--f-display);text-transform:uppercase}
+.proc[data-stack] .proc-s>p{grid-column:2;font-size:1rem;color:var(--v-soft);max-width:34rem}
+.proc[data-stack] .proc-s ul{grid-column:3;grid-row:1 / -1;align-self:center;gap:0;border-top:1px solid var(--v-line)}
+.proc[data-stack] .proc-s ul li{padding:12px 0 12px 22px;border-bottom:1px solid var(--v-line);font-size:.88rem;color:var(--v-soft)}
+.proc[data-stack] .proc-s ul li::before{top:1.15em;border-color:var(--v-pur-2)}
+/* about: the four habits */
+.ap-g[data-stack] .ap{display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:clamp(24px,4vw,56px);row-gap:12px;min-height:clamp(220px,30vh,300px);padding:clamp(26px,3.4vw,44px);border-radius:var(--r-4)}
+.ap-g[data-stack] .ap .folio{grid-column:1;grid-row:1 / -1;align-self:start;font:900 clamp(4.6rem,3rem + 4vw,7.6rem)/.8 var(--f-display);letter-spacing:0;color:transparent;-webkit-text-stroke:1.4px var(--v-glow);filter:drop-shadow(0 0 12px rgb(155 123 255 / .45))}
+.ap-g[data-stack] .ap .folio::before{content:none}
+.ap-g[data-stack] .ap .h3{grid-column:2;align-self:end;font-size:clamp(1.9rem,1.3rem + 1.8vw,3rem)}
+.ap-g[data-stack] .ap p{grid-column:2;max-width:38rem;font-size:1rem}
+@media (max-width:760px){
+  [data-stack]>*{top:calc(84px + var(--si,0) * 10px);margin-bottom:4vh}
+  .proc[data-stack] .proc-s,.ap-g[data-stack] .ap{grid-template-columns:minmax(0,1fr);min-height:0;padding:24px 22px}
+  .proc[data-stack] .proc-s .pn{grid-row:auto;flex-direction:row;align-items:center}
+  .proc[data-stack] .proc-s .pn b,.ap-g[data-stack] .ap .folio{font-size:3.8rem}
+  .proc[data-stack] .proc-s h3,.proc[data-stack] .proc-s>p,.proc[data-stack] .proc-s ul,.ap-g[data-stack] .ap .h3,.ap-g[data-stack] .ap p,.ap-g[data-stack] .ap .folio{grid-column:1;grid-row:auto}
+  .proc[data-stack] .proc-s h3,.ap-g[data-stack] .ap .h3{font-size:2rem}
+}
+@media (prefers-reduced-motion:reduce){[data-stack]>*{position:relative;top:auto}}
+.how.ap-g[data-stack]{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+@media (min-width:761px){.how[data-stack]>*{top:calc(150px + var(--si,0) * 14px)}}
 </style></head><body data-page="syllabus"><a class="skip" href="#main">Skip to content</a><div class="bg-base" aria-hidden="true"></div><div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><canvas id="bg3d" aria-hidden="true"></canvas><div class="bg-veil" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div class="ldx" aria-hidden="true"><div class="ldx-fill"><div class="ldx-grp"><div class="ldx-w">ROHAIL<div class="ldx-gold"><img src="rohail-ahmed.webp" alt="" decoding="async"><i class="ldx-shine"></i></div><i class="ldx-crest"></i></div><div class="ldx-s">O &amp; A Level Accounting &middot; Karachi</div></div></div><div class="ldx-ink"><div class="ldx-grp"><div class="ldx-w"><span><i>R</i></span><span><i>O</i></span><span><i>H</i></span><span><i>A</i></span><span class="ldx-i"><i>I</i></span><span><i>L</i></span></div><div class="ldx-s"><span>O &amp; A Level Accounting &middot; Karachi</span></div></div></div><div class="ldx-m ldx-tl"><img src="ra-mark.svg" alt="" width="195" height="122"><span>Sir Rohail Ahmed</span></div><div class="ldx-m ldx-tr">Cambridge Accounting</div><div class="ldx-m ldx-bl"><b id="ldN">000</b><span>Posting the ledger</span></div><div class="ldx-m ldx-br">O Level 7707<br>AS &amp; A Level 9706</div></div><div class="pt" aria-hidden="true"><div class="pt-bg"></div><div class="pt-in"><span class="pt-f"></span><div class="pt-w"></div></div><i class="pt-line"></i></div><i class="sprog" aria-hidden="true"></i><header class="nav"><a class="brand" href="index.html" aria-label="Sir Rohail Ahmed, home"><span class="seal" aria-hidden="true"><img src="ra-mark.svg" alt="" width="195" height="122" decoding="async"></span><span class="brand-t"><b>Sir Rohail Ahmed</b><span>Accounting · O &amp; A Level</span></span></a><nav class="nav-links" aria-label="Main"><a href="courses.html">Courses</a><a href="syllabus.html" aria-current="page">Syllabus</a><a href="past-papers.html">Past papers</a><a href="lab.html">Lab</a><a href="portal.html">Portal</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><div class="nav-r"><button class="nav-search" type="button" data-cmdk aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span><kbd>⌘K</kbd></button><a class="btn btn-pri btn-sm btn-enrol" href="contact.html#enrol">Enrol</a><button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button></div></header><div class="menu" id="menu" aria-hidden="true"><nav aria-label="Mobile"><a href="index.html"><small>01</small>Home<i>f.01</i></a><a href="courses.html"><small>02</small>Courses<i>f.02</i></a><a href="syllabus.html" aria-current="page"><small>03</small>Syllabus<i>f.03</i></a><a href="past-papers.html"><small>04</small>Past papers<i>f.04</i></a><a href="lab.html"><small>05</small>Lab<i>f.05</i></a><a href="portal.html"><small>06</small>Portal<i>f.06</i></a><a href="about.html"><small>07</small>About<i>f.07</i></a><a href="contact.html"><small>08</small>Contact<i>f.08</i></a></nav><div class="menu-foot"><a class="btn btn-pri" data-wa="Assalam o Alaikum, I would like to enrol with Sir Rohail Ahmed." href="https://wa.me/923060233883?text=Assalam%20o%20Alaikum%2C%20I%20would%20like%20to%20enrol%20with%20Sir%20Rohail%20Ahmed." target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-sm mf-portal" href="portal.html">Student portal</a><button class="btn btn-sm" type="button" data-sound-toggle>Sound</button></div></div><main id="main"><section class="phero" data-shape="cycle" data-shape-x=".6" data-shape-y="-.42" data-shape-s=".55" data-shape-a=".4" data-shape-spin=".08" data-shape-my="-.62" data-shape-ms=".36" data-shape-ma=".2">
   <div class="wrap sy-hero">
     <div>
@@ -2275,7 +2320,7 @@ RA.tilt = function (scope) {
   });
 };
 function autoTilt() {
-  $$('.card').forEach(c => { if (c.hasAttribute('data-tilt') || c.closest('.vpanel,form,[data-rail]') || $('input,select,textarea,table,canvas', c)) return; c.setAttribute('data-tilt', '3.5'); });
+  $$('.card').forEach(c => { if (c.hasAttribute('data-tilt') || c.closest('.vpanel,form,[data-rail],[data-stack]') || $('input,select,textarea,table,canvas', c)) return; c.setAttribute('data-tilt', '3.5'); });
 }
 function magnetic() {
   if (!RA.FINE || RA.RM) return;
@@ -2737,6 +2782,17 @@ function motion() {
     addEventListener('scroll', () => { const now = performance.now(), dv = Math.abs(scrollY - last) / Math.max(16, now - lt) * 16; last = scrollY; lt = now; v = Math.max(v, 1 + Math.min(dv / 6, 7)); }, { passive: true });
     G.ticker.add(() => { v += (1 - v) * 0.05; tapes.forEach(a => a.playbackRate = v); });
   }
+  /* VERZISH sticky stack: each card pins under the nav; the ones beneath shrink back and dim as the next arrives */
+  $$('[data-stack]').forEach(st => {
+    const kids = Array.from(st.children);
+    kids.forEach((k, i) => k.style.setProperty('--si', i));
+    kids.forEach((k, i) => {
+      if (i === kids.length - 1) return;
+      const nxt = kids[i + 1];
+      G.fromTo(k, { scale: 1, filter: 'brightness(1)' }, { scale: 0.9 + Math.min(i, 5) * 0.008, filter: 'brightness(.42)', ease: 'none', immediateRender: false,
+        scrollTrigger: { trigger: nxt, start: 'top bottom', end: () => 'top ' + (parseFloat(getComputedStyle(nxt).top) || 100) + 'px', scrub: true, invalidateOnRefresh: true } });
+    });
+  });
   /* rails glide in from the right */
   $$('[data-rail]').forEach(r => G.from(r, { x: 80, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: r, start: 'top 88%', once: true } }));
   /* big section numbers drift */

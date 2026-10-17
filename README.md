@@ -35,8 +35,9 @@ Everything on the site comes from a public source. Nothing is estimated. These a
 6. **Interview quotes.** From "Rohail Ahmed | Interview" on timesofyouth.com. Confirm it is him.
 7. **Recorded Workshop, Oct/Nov 2026, O Level, AS and A2.** From his Instagram. Fees are not shown anywhere; every fee question goes to WhatsApp.
 8. **Portrait.** The cutout comes from the Cambridge Online portrait. A higher-resolution photo with a plain background will look sharper.
-9. **Video.** The home page plays his own YouTube video "O Level Accounting 7707 | Full Solution | May/June 2022 v22". Change `featuredVideo` in `config.js` to feature another.
-10. **Domain.** `sitemap.xml`, `robots.txt` and each page's `<head>` use `https://sir-rohail-ahmed.vercel.app`. Find and replace it if you use another domain.
+9. **Credo logo and Credo photo.** The Credo School & College System logo (footer, home, about, contact) and the photo of Sir Rohail on the About page load straight from Credo's own website (`school.credo.edu.pk`). Confirm Credo is happy for the logo to appear. If Credo's site ever blocks them, the plaque shows the word CREDO instead and the photo hides itself. To host them yourself, add the files to the repo and find and replace `https://school.credo.edu.pk/wp-content/uploads/2019/12/black_logo.png` and `.../Rohail-Ahmed-292x300.png` in the HTML files with the new file names.
+10. **Video.** The home page plays his own YouTube video "O Level Accounting 7707 | Full Solution | May/June 2022 v22". Change `featuredVideo` in `config.js` to feature another.
+11. **Domain.** `sitemap.xml`, `robots.txt` and each page's `<head>` use `https://sir-rohail-ahmed.vercel.app`. Find and replace it if you use another domain.
 
 Results and student reviews sections stay hidden until real ones are added to `RESULTS` and `REVIEWS` in `config.js`.
 
@@ -51,6 +52,14 @@ Out of the box `PORTAL_PREVIEW: true` lets you demo the portal and admin panel w
 5. Set `PORTAL_PREVIEW: false`.
 
 Then from `/admin`: issue each student an ID (RA-1001, RA-1002, …) and a code, which you can send straight to their WhatsApp. One ID works on two devices; reset devices from the panel. Lectures take a YouTube link (unlisted works) or an .mp4 link, plus an optional notes PDF. The enrolment form also saves each enquiry to the Enrolments tab once Supabase is connected.
+
+## Design
+
+- Type: Bodoni Moda for headings, Manrope for text, DM Mono for figures (all Google Fonts).
+- Colour: night emerald, champagne gold and ivory in the dark theme; ivory paper with emerald lacquer buttons in the light theme.
+- Frosted-glass cards and buttons with lit gold hairlines; the primary button is brushed gold with an engraved inner frame and its own icon cell.
+- Long lists scroll sideways (with arrows, a counter and drag) or inside their own panel, so pages stay short.
+- Photographs are free Unsplash images, colour-graded in CSS into the site's emerald-and-gold palette (the YouTube cover too). They load from `images.unsplash.com`; if one fails, a ruled emerald panel shows instead.
 
 ## Notes on content
 
